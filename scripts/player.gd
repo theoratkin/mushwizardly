@@ -14,6 +14,8 @@ func collect_coin():
 	coin_collected.emit(GameState.coin_balance)
 
 func _physics_process(delta: float) -> void:
+	if GameState.is_game_over:
+		return
 	var direction := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	self._handle_movement(direction, delta)
 	self._handle_flip(direction)
@@ -31,6 +33,8 @@ func _handle_flip(direction: Vector2):
 		sprite.flip_h = is_flipped
 
 func _input(event):
+	if GameState.is_game_over:
+		return
 	self._handle_attack(event)
 	if OS.has_feature("editor"):
 		self._handle_debug_keys(event)

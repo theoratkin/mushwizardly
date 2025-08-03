@@ -8,5 +8,5 @@ func _on_animation_end() -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	if "on_hit" in body:
+	if body.get_meta("is_enemy", false) and "on_hit" in body:
 		body.on_hit(global_position)

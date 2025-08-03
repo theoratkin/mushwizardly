@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://b7dqg4q4o88ap"]
+
+[ext_resource type="Script" uid="uid://dj5nu1vwmnw1f" path="res://scripts/healthbar.gd" id="1_8gvbg"]
+
+[sub_resource type="Gradient" id="Gradient_6mjbd"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_cdvdf"]
+gradient = SubResource("Gradient_6mjbd")
+width = 16
+
+[node name="healthbar" type="Node2D"]
+position = Vector2(-8, 0)
+script = ExtResource("1_8gvbg")
+
+[node name="bg" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 0.372549)
+texture = SubResource("GradientTexture1D_cdvdf")
+offset = Vector2(8, 0)
+
+[node name="sprite" type="Sprite2D" parent="."]
+modulate = Color(0.227451, 0.631373, 0.321569, 1)
+texture = SubResource("GradientTexture1D_cdvdf")
+offset = Vector2(8, 0)

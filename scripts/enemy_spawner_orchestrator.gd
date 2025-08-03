@@ -14,5 +14,7 @@ func spawn_random_enemy():
 	spawner.spawn_random_enemy()
 
 func _on_timer_timeout() -> void:
+	if GameState.is_game_over:
+		return
 	timer.wait_time = 1 + randf() * 1
 	spawn_random_enemy()

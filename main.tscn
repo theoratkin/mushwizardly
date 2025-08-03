@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=4 uid="uid://b5wu7a23cc7je"]
+[gd_scene load_steps=46 format=4 uid="uid://b5wu7a23cc7je"]
 
 [ext_resource type="Texture2D" uid="uid://b6eggqcv60klk" path="res://sprites/foliage.png" id="1_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://b752koosuarxv" path="res://sprites/tileset.png" id="1_h2yge"]
@@ -10,11 +10,14 @@
 [ext_resource type="Script" uid="uid://3rr5p4hctrqw" path="res://scripts/enemy_spawner_orchestrator.gd" id="6_272bh"]
 [ext_resource type="Texture2D" uid="uid://dwbrmdtp7laa" path="res://sprites/protector.png" id="6_efxa6"]
 [ext_resource type="Texture2D" uid="uid://bptswr526lfgi" path="res://sprites/ring1.png" id="6_ycdy4"]
+[ext_resource type="PackedScene" uid="uid://b7dqg4q4o88ap" path="res://reusable_scenes/healthbar.tscn" id="7_cegan"]
 [ext_resource type="Texture2D" uid="uid://dc4r6u0jd5cam" path="res://sprites/ring2.png" id="7_vivmo"]
 [ext_resource type="Texture2D" uid="uid://17p21ibal2w2" path="res://sprites/coin.png" id="8_5vw27"]
 [ext_resource type="Texture2D" uid="uid://d3ffon7c6oibc" path="res://sprites/ring3.png" id="8_vivmo"]
 [ext_resource type="FontFile" uid="uid://caqa8gk8bjfox" path="res://fonts/PressStart2P-Regular.ttf" id="9_kek77"]
 [ext_resource type="Script" uid="uid://csvxnptcdnt0m" path="res://scripts/ui/coins_label.gd" id="10_4c57u"]
+[ext_resource type="Script" uid="uid://sh5fq58iiey3" path="res://scripts/home.gd" id="11_82xsv"]
+[ext_resource type="Script" uid="uid://ctc36q7nm6ubr" path="res://scripts/restart_timer.gd" id="14_getpj"]
 [ext_resource type="Texture2D" uid="uid://c4u30tcl752qb" path="res://sprites/ui.png" id="15_2cqfq"]
 [ext_resource type="Script" uid="uid://d1e3hdindg16o" path="res://scripts/ui/shop.gd" id="15_yaehf"]
 [ext_resource type="Script" uid="uid://bw0ii02wmlfuq" path="res://scripts/ui/shop_item.gd" id="17_074og"]
@@ -44,9 +47,6 @@ texture_region_size = Vector2i(8, 8)
 [sub_resource type="TileSet" id="TileSet_7mycd"]
 tile_size = Vector2i(8, 8)
 sources/1 = SubResource("TileSetAtlasSource_lquwl")
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lquwl"]
-size = Vector2(8, 7)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_074og"]
 atlas = ExtResource("2_0xm2m")
@@ -119,6 +119,39 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7mycd"]
 size = Vector2(7, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lswn8"]
+atlas = ExtResource("1_ig7tw")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a6jrf"]
+atlas = ExtResource("1_ig7tw")
+region = Rect2(0, 8, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xuqvo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lswn8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a6jrf")
+}],
+"loop": true,
+"name": &"destroyed",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lquwl"]
+size = Vector2(8, 7)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_82xsv"]
+radius = 6.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5vw27"]
 atlas = ExtResource("8_5vw27")
@@ -194,16 +227,6 @@ use_parent_material = true
 tile_map_data = PackedByteArray("AAAQAAoAAQABAAAAAAAQABIAAQAAAAAAAAARAAsAAQAAAAAAAAARAAwAAQAAAAAAAAARABIAAQABAAAAAAAXAA0AAQABAAAAAAAZAA8AAQAAAAAAAAAaAA8AAQAAAAAAAAAbABMAAQAAAAAAAAAfAAoAAQAAAAAAAAAgAAkAAQAAAAAAAAAgAAoAAQAAAAAAAAAhABIAAQABAAAAAAA=")
 tile_set = SubResource("TileSet_7mycd")
 
-[node name="home" type="StaticBody2D" parent="."]
-position = Vector2(196, 108)
-
-[node name="sprite" type="Sprite2D" parent="home"]
-texture = ExtResource("1_ig7tw")
-
-[node name="collision shape" type="CollisionShape2D" parent="home"]
-position = Vector2(0, 0.5)
-shape = SubResource("RectangleShape2D_lquwl")
-
 [node name="player" type="CharacterBody2D" parent="."]
 position = Vector2(204, 108)
 motion_mode = 1
@@ -249,7 +272,34 @@ position = Vector2(78, 175)
 wait_time = 3.0
 autostart = true
 
+[node name="coins container" type="Node2D" parent="."]
+
 [node name="enemies container" type="Node2D" parent="."]
+
+[node name="home" type="StaticBody2D" parent="."]
+position = Vector2(196, 108)
+script = ExtResource("11_82xsv")
+
+[node name="healthbar" parent="home" instance=ExtResource("7_cegan")]
+position = Vector2(-8, -4.5)
+
+[node name="sprite" type="AnimatedSprite2D" parent="home"]
+sprite_frames = SubResource("SpriteFrames_xuqvo")
+autoplay = "default"
+
+[node name="collision shape" type="CollisionShape2D" parent="home"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_lquwl")
+
+[node name="area" type="Area2D" parent="home"]
+
+[node name="collision shape" type="CollisionShape2D" parent="home/area"]
+shape = SubResource("CircleShape2D_82xsv")
+
+[node name="restart timer" type="Timer" parent="."]
+process_mode = 3
+wait_time = 5.0
+script = ExtResource("14_getpj")
 
 [node name="gui" type="Control" parent="."]
 layout_mode = 3
@@ -349,4 +399,7 @@ stretch_mode = 2
 [connection signal="coin_collected" from="player" to="gui/hud/coins/label" method="_on_player_coin_collected"]
 [connection signal="animation_finished" from="player/sprite" to="player" method="_on_animation_finished"]
 [connection signal="timeout" from="enemy spawner orchestrator/timer" to="enemy spawner orchestrator" method="_on_timer_timeout"]
+[connection signal="body_entered" from="home/area" to="home" method="_on_body_entered"]
+[connection signal="body_exited" from="home/area" to="home" method="_on_body_exited"]
+[connection signal="timeout" from="restart timer" to="restart timer" method="_on_timeout"]
 [connection signal="pressed" from="gui/shop/items/item" to="gui/shop/items/item" method="_on_pressed"]

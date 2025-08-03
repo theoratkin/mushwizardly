@@ -6,6 +6,8 @@ const move_towards_player_min_distance = 20
 const move_towards_player_speed = 10
 
 func _process(delta: float) -> void:
+	if GameState.is_game_over:
+		return
 	self._move_towards_player(delta)
 
 func _move_towards_player(delta: float):
