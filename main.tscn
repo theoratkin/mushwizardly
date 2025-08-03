@@ -249,6 +249,8 @@ position = Vector2(78, 175)
 wait_time = 3.0
 autostart = true
 
+[node name="enemies container" type="Node2D" parent="."]
+
 [node name="gui" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
