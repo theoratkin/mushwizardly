@@ -32,6 +32,8 @@ func _handle_flip(direction: Vector2):
 
 func _input(event):
 	self._handle_attack(event)
+	if OS.has_feature("editor"):
+		self._handle_debug_keys(event)
 
 func _handle_attack(event: InputEvent):
 	if event.is_action_pressed("attack"):
@@ -39,6 +41,10 @@ func _handle_attack(event: InputEvent):
 		var instance = swoosh.instantiate()
 		add_child(instance)
 		instance.set_flipped(is_flipped)
+
+func _handle_debug_keys(event: InputEvent):
+	if event.is_action_pressed("debug_get_coins"):
+		GameState.coin_balance += 10
 
 func _on_animation_finished() -> void:
 	sprite.play("default")
