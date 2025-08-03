@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://b5wu7a23cc7je"]
+[gd_scene load_steps=39 format=4 uid="uid://b5wu7a23cc7je"]
 
 [ext_resource type="Texture2D" uid="uid://b6eggqcv60klk" path="res://sprites/foliage.png" id="1_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://b752koosuarxv" path="res://sprites/tileset.png" id="1_h2yge"]
@@ -8,12 +8,16 @@
 [ext_resource type="Script" uid="uid://wx2k0x23faft" path="res://scripts/ring.gd" id="6_2cqfq"]
 [ext_resource type="PackedScene" uid="uid://bqgll8bhnslgx" path="res://reusable_scenes/enemy_spawner.tscn" id="6_7mycd"]
 [ext_resource type="Script" uid="uid://3rr5p4hctrqw" path="res://scripts/enemy_spawner_orchestrator.gd" id="6_272bh"]
+[ext_resource type="Texture2D" uid="uid://dwbrmdtp7laa" path="res://sprites/protector.png" id="6_efxa6"]
 [ext_resource type="Texture2D" uid="uid://bptswr526lfgi" path="res://sprites/ring1.png" id="6_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://dc4r6u0jd5cam" path="res://sprites/ring2.png" id="7_vivmo"]
 [ext_resource type="Texture2D" uid="uid://17p21ibal2w2" path="res://sprites/coin.png" id="8_5vw27"]
 [ext_resource type="Texture2D" uid="uid://d3ffon7c6oibc" path="res://sprites/ring3.png" id="8_vivmo"]
 [ext_resource type="FontFile" uid="uid://caqa8gk8bjfox" path="res://fonts/PressStart2P-Regular.ttf" id="9_kek77"]
 [ext_resource type="Script" uid="uid://csvxnptcdnt0m" path="res://scripts/ui/coins_label.gd" id="10_4c57u"]
+[ext_resource type="Texture2D" uid="uid://c4u30tcl752qb" path="res://sprites/ui.png" id="15_2cqfq"]
+[ext_resource type="Script" uid="uid://d1e3hdindg16o" path="res://scripts/ui/shop.gd" id="15_yaehf"]
+[ext_resource type="Script" uid="uid://bw0ii02wmlfuq" path="res://scripts/ui/shop_item.gd" id="17_074og"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1bvp3"]
 texture = ExtResource("1_h2yge")
@@ -123,7 +127,19 @@ margin = Rect2(1, 1, 1, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_4c57u"]
 font = ExtResource("9_kek77")
-font_size = 10
+font_size = 8
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d13ii"]
+atlas = ExtResource("15_2cqfq")
+region = Rect2(0, 0, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1u8w0"]
+atlas = ExtResource("15_2cqfq")
+region = Rect2(0, 16, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0odxb"]
+atlas = ExtResource("6_efxa6")
+region = Rect2(0, 0, 16, 16)
 
 [node name="main" type="Node2D"]
 
@@ -232,7 +248,7 @@ position = Vector2(78, 175)
 wait_time = 3.0
 autostart = true
 
-[node name="hud" type="Control" parent="."]
+[node name="gui" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -242,7 +258,7 @@ offset_bottom = 216.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="hud"]
+[node name="hud" type="MarginContainer" parent="gui"]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 1.0
@@ -255,21 +271,79 @@ offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="coins" type="HBoxContainer" parent="hud/MarginContainer"]
+[node name="coins" type="HBoxContainer" parent="gui/hud"]
 layout_mode = 2
 
-[node name="icon" type="TextureRect" parent="hud/MarginContainer/coins"]
+[node name="icon" type="TextureRect" parent="gui/hud/coins"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_5vw27")
 expand_mode = 2
 
-[node name="label" type="Label" parent="hud/MarginContainer/coins"]
+[node name="label" type="Label" parent="gui/hud/coins"]
 layout_mode = 2
 text = "0"
 label_settings = SubResource("LabelSettings_4c57u")
 vertical_alignment = 1
 script = ExtResource("10_4c57u")
 
-[connection signal="coin_collected" from="player" to="hud/MarginContainer/coins/label" method="_on_player_coin_collected"]
+[node name="shop" type="MarginContainer" parent="gui"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -24.0
+offset_top = -16.0
+offset_right = 24.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("15_yaehf")
+
+[node name="items" type="VBoxContainer" parent="gui/shop"]
+layout_mode = 2
+alignment = 2
+
+[node name="item" type="TextureButton" parent="gui/shop/items"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_d13ii")
+texture_hover = SubResource("AtlasTexture_1u8w0")
+script = ExtResource("17_074og")
+
+[node name="TextureRect" type="TextureRect" parent="gui/shop/items/item"]
+layout_mode = 2
+offset_right = 16.0
+offset_bottom = 16.0
+texture = SubResource("AtlasTexture_0odxb")
+
+[node name="label" type="Label" parent="gui/shop/items/item"]
+layout_mode = 2
+offset_left = 25.0
+offset_top = 4.0
+offset_right = 41.0
+offset_bottom = 12.0
+text = "10"
+label_settings = SubResource("LabelSettings_4c57u")
+vertical_alignment = 1
+
+[node name="icon" type="TextureRect" parent="gui/shop/items/item"]
+layout_mode = 2
+offset_left = 17.0
+offset_top = 5.0
+offset_right = 23.0
+offset_bottom = 11.0
+texture = SubResource("AtlasTexture_5vw27")
+stretch_mode = 2
+
+[connection signal="player_entered_circle" from="ring1" to="gui/shop" method="_on_player_entered_circle"]
+[connection signal="player_exited_circle" from="ring1" to="gui/shop" method="_on_player_exited_circle"]
+[connection signal="player_entered_circle" from="ring2" to="gui/shop" method="_on_player_entered_circle"]
+[connection signal="player_exited_circle" from="ring2" to="gui/shop" method="_on_player_exited_circle"]
+[connection signal="player_entered_circle" from="ring3" to="gui/shop" method="_on_player_entered_circle"]
+[connection signal="player_exited_circle" from="ring3" to="gui/shop" method="_on_player_exited_circle"]
+[connection signal="coin_collected" from="player" to="gui/hud/coins/label" method="_on_player_coin_collected"]
 [connection signal="animation_finished" from="player/sprite" to="player" method="_on_animation_finished"]
 [connection signal="timeout" from="enemy spawner orchestrator/timer" to="enemy spawner orchestrator" method="_on_timer_timeout"]
+[connection signal="pressed" from="gui/shop/items/item" to="gui/shop/items/item" method="_on_pressed"]

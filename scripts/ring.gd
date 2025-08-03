@@ -1,5 +1,8 @@
 extends Node2D
 
+signal player_entered_circle(ring)
+signal player_exited_circle(ring)
+
 @export var radius = 28
 @export var standing_tolerance = 4
 @export var highlight_color = Color.WHITE
@@ -11,11 +14,12 @@ extends Node2D
 var protector_scene = preload("res://reusable_scenes/protector.tscn")
 
 var normal_color: Color
+var is_player_standing_on_circle
 
 func _ready():
 	normal_color = sprite.modulate
 
-func is_player_standing_on_circle():
+func check_is_player_standing_on_circle():
 	var distance = player.global_position.distance_to(global_position)
 	return abs(distance - radius) < standing_tolerance
 
@@ -26,6 +30,11 @@ func spawn_protector():
 	get_node("..").add_child(instance)
 
 func _process(_delta: float):
-	sprite.modulate = highlight_color if is_player_standing_on_circle() else normal_color
-	if is_player_standing_on_circle() and Input.is_action_just_pressed("attack"):
-		spawn_protector()
+	var did_player_stand_on_circle = is_player_standing_on_circle
+	is_player_standing_on_circle = check_is_player_standing_on_circle()
+	sprite.modulate = highlight_color if is_player_standing_on_circle else normal_color
+	if not did_player_stand_on_circle and is_player_standing_on_circle:
+		GameState.active_ring = self
+		player_entered_circle.emit(self)
+	if did_player_stand_on_circle and not is_player_standing_on_circle:
+		player_exited_circle.emit(self)

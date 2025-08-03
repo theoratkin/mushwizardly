@@ -8,11 +8,10 @@ signal coin_collected(total_coins: int)
 
 var swoosh = preload("res://reusable_scenes/swoosh.tscn")
 var is_flipped = false
-var coins: int = 0
 
 func collect_coin():
-	coins += 1
-	coin_collected.emit(coins)
+	GameState.coin_balance += 1
+	coin_collected.emit(GameState.coin_balance)
 
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_vector("move_left", "move_right", "move_up", "move_down")
