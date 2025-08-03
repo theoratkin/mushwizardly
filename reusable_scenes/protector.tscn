@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://6dytii4slisf"]
+[gd_scene load_steps=8 format=3 uid="uid://6dytii4slisf"]
 
 [ext_resource type="Script" uid="uid://cicfbw1bwacue" path="res://scripts/protector.gd" id="1_ijqbt"]
 [ext_resource type="Texture2D" uid="uid://dwbrmdtp7laa" path="res://sprites/protector.png" id="2_737ub"]
@@ -44,10 +44,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ijqbt"]
-radius = 32.0
-
-[node name="protector" type="Area2D"]
+[node name="protector" type="Node2D"]
 script = ExtResource("1_ijqbt")
 patrol_speed = 30.0
 
@@ -55,9 +52,3 @@ patrol_speed = 30.0
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_1u8w0")
 autoplay = "default"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -8)
-shape = SubResource("CircleShape2D_ijqbt")
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
