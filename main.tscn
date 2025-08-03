@@ -161,6 +161,7 @@ texture = ExtResource("6_ycdy4")
 position = Vector2(196, 108)
 script = ExtResource("6_2cqfq")
 radius = 52
+speed_multiplier = -1
 highlight_color = Color(1, 1, 1, 0.0784314)
 
 [node name="sprite" type="Sprite2D" parent="ring2"]

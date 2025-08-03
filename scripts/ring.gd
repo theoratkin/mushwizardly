@@ -5,6 +5,7 @@ signal player_exited_circle(ring)
 
 @export var radius = 28
 @export var standing_tolerance = 4
+@export var speed_multiplier = 1
 @export var highlight_color = Color.WHITE
 
 @onready var player = get_node("/root/main/player")
@@ -26,7 +27,7 @@ func check_is_player_standing_on_circle():
 func spawn_protector():
 	var instance = protector_scene.instantiate()
 	instance.patrol_radius = radius
-	instance.patrol_speed = instance.patrol_speed / radius
+	instance.patrol_speed = instance.patrol_speed / radius * speed_multiplier
 	get_node("..").add_child(instance)
 
 func _process(_delta: float):
