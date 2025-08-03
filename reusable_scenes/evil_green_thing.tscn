@@ -1,0 +1,60 @@
+[gd_scene load_steps=9 format=3 uid="uid://dqol52bwwoy7r"]
+
+[ext_resource type="Script" uid="uid://7x5bhemm0w41" path="res://scripts/enemy.gd" id="1_xy8fc"]
+[ext_resource type="Texture2D" uid="uid://dsfw7sbw828tb" path="res://sprites/evil-green-thing.png" id="2_ap8mw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kek77"]
+atlas = ExtResource("2_ap8mw")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4c57u"]
+atlas = ExtResource("2_ap8mw")
+region = Rect2(24, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_272bh"]
+atlas = ExtResource("2_ap8mw")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5vw27"]
+atlas = ExtResource("2_ap8mw")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_efxa6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kek77")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4c57u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_272bh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5vw27")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dg77c"]
+size = Vector2(5, 3)
+
+[node name="evil green thing" type="RigidBody2D"]
+mass = 0.5
+gravity_scale = 0.0
+lock_rotation = true
+linear_damp = 3.0
+script = ExtResource("1_xy8fc")
+health = 15
+
+[node name="animated sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_efxa6")
+autoplay = "default"
+speed_scale = 3.0
+
+[node name="collision shape" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 2.5)
+shape = SubResource("RectangleShape2D_dg77c")

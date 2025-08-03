@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=3 uid="uid://dg0o8hw2wi4p4"]
+
+[ext_resource type="Script" uid="uid://c43boq764a1q6" path="res://scripts/coin.gd" id="1_1bly5"]
+[ext_resource type="Texture2D" uid="uid://17p21ibal2w2" path="res://sprites/coin.png" id="1_ll5fb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kek77"]
+atlas = ExtResource("1_ll5fb")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5vw27"]
+atlas = ExtResource("1_ll5fb")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4c57u"]
+animations = [{
+"frames": [{
+"duration": 10.0,
+"texture": SubResource("AtlasTexture_kek77")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5vw27")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kek77")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"disappear warning",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1bly5"]
+radius = 2.0
+
+[node name="coin" type="Area2D"]
+script = ExtResource("1_1bly5")
+
+[node name="animated sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_4c57u")
+animation = &"disappear warning"
+autoplay = "default"
+
+[node name="collision shape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1bly5")
+
+[node name="disappear timer" type="Timer" parent="."]
+wait_time = 15.0
+autostart = true
+
+[node name="disappear warning timer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="disappear timer" to="." method="_on_disappear_timer_timeout"]
+[connection signal="timeout" from="disappear warning timer" to="." method="_on_disappear_warning_timer_timeout"]

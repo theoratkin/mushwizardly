@@ -1,0 +1,61 @@
+[gd_scene load_steps=9 format=3 uid="uid://bw1077xmsy1h6"]
+
+[ext_resource type="Texture2D" uid="uid://d2smfvlr2lvna" path="res://sprites/swoosh.png" id="1_2nleu"]
+[ext_resource type="Script" uid="uid://dmvg8t44jcuvn" path="res://scripts/swoosh.gd" id="2_5slu2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5slu2"]
+atlas = ExtResource("1_2nleu")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_seg6x"]
+atlas = ExtResource("1_2nleu")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hgl0a"]
+atlas = ExtResource("1_2nleu")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ye0f"]
+atlas = ExtResource("1_2nleu")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8x1y7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5slu2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_seg6x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hgl0a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ye0f")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m4ina"]
+
+[node name="swoosh" type="Area2D"]
+script = ExtResource("2_5slu2")
+
+[node name="animated sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_8x1y7")
+autoplay = "default"
+frame = 4
+frame_progress = 1.0
+speed_scale = 3.0
+
+[node name="collision shape" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_m4ina")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="animated sprite" to="." method="_on_animation_end"]
