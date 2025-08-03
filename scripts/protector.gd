@@ -54,6 +54,7 @@ func fire_at_closest_enemy_within_range():
 func fire_at_enemy(enemy: Node2D):
 	spawn_projectile(enemy.global_position)
 	firerate_timeout = firerate
+	get_node("animated sprite").play("attack")
 
 
 func spawn_projectile(target: Vector2):
@@ -61,3 +62,9 @@ func spawn_projectile(target: Vector2):
 	projectile.global_position = global_position
 	projectile.target = target
 	get_node("..").add_child(projectile)
+
+
+func _on_animation_finished() -> void:
+	var sprite: AnimatedSprite2D = get_node("animated sprite")
+	if sprite.animation == "attack":
+		sprite.play("default")

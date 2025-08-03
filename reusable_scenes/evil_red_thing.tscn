@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://1urh5d1gxwpw"]
+[gd_scene load_steps=11 format=3 uid="uid://1urh5d1gxwpw"]
 
 [ext_resource type="Script" uid="uid://7x5bhemm0w41" path="res://scripts/enemy.gd" id="1_7tfyn"]
 [ext_resource type="Texture2D" uid="uid://d1m3oamtmbtuc" path="res://sprites/evil-red-thing.png" id="2_nhklh"]
+[ext_resource type="Texture2D" uid="uid://p0gl3i4dhpsh" path="res://sprites/shadows.png" id="3_nhklh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_efxa6"]
 atlas = ExtResource("2_nhklh")
@@ -42,6 +43,10 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2cqfq"]
 size = Vector2(12, 14)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_t8vk4"]
+atlas = ExtResource("3_nhklh")
+region = Rect2(16, 0, 16, 8)
+
 [node name="evil red thing" type="RigidBody2D"]
 gravity_scale = 0.0
 lock_rotation = true
@@ -57,6 +62,11 @@ speed_scale = 3.0
 [node name="collision shape" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_2cqfq")
+
+[node name="shadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(0, 7)
+texture = SubResource("AtlasTexture_t8vk4")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

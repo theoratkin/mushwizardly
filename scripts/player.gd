@@ -31,6 +31,7 @@ func _handle_flip(direction: Vector2):
 	if direction.x:
 		is_flipped = direction.x < 0
 		sprite.flip_h = is_flipped
+		get_node("shadow").flip_h = is_flipped
 
 func _input(event):
 	if GameState.is_game_over:
