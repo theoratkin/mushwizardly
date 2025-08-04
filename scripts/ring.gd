@@ -25,11 +25,15 @@ func check_is_player_standing_on_circle():
 	return abs(distance - radius) < standing_tolerance
 
 func spawn_protector():
+	var dir_vector = player.global_position - global_position
+	var angle = dir_vector.angle()
 	var instance = protector_scene.instantiate()
+	instance.set_ring_position(angle)
 	instance.patrol_radius = radius
 	instance.patrol_speed = instance.patrol_speed / radius * speed_multiplier
 	get_node("..").add_child(instance)
 	GameState.wizard_count += 1
+
 
 func _process(_delta: float):
 	var did_player_stand_on_circle = is_player_standing_on_circle

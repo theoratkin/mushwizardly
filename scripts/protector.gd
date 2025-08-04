@@ -14,6 +14,12 @@ var current_ring_pos = 0
 var firerate_timeout = 0
 
 
+func set_ring_position(angle: float):
+	current_ring_pos = angle
+	if not home:
+		return
+	global_position = home.global_position + self.polar_to_cartesian(patrol_radius, current_ring_pos)
+
 func _get_closest_enemy():
 	var closest_enemy = null
 	for enemy in enemies_container.get_children():
@@ -30,8 +36,7 @@ func _get_closest_enemy():
 func _process(delta: float):
 	if GameState.is_game_over:
 		return
-	current_ring_pos += delta * patrol_speed
-	global_position = home.global_position + self.polar_to_cartesian(patrol_radius, current_ring_pos)
+	self.set_ring_position(current_ring_pos + delta * patrol_speed)
 	if firerate_timeout <= 0:
 		fire_at_closest_enemy_within_range()
 	else:

@@ -62,7 +62,7 @@ metadata/is_enemy = true
 [node name="animated sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_a5w2p")
 autoplay = "default"
-frame_progress = 0.485892
+frame_progress = 0.40699
 speed_scale = 3.0
 
 [node name="collision shape" type="CollisionShape2D" parent="."]
