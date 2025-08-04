@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://dqol52bwwoy7r"]
+[gd_scene load_steps=14 format=3 uid="uid://dqol52bwwoy7r"]
 
 [ext_resource type="Script" uid="uid://7x5bhemm0w41" path="res://scripts/enemy.gd" id="1_xy8fc"]
 [ext_resource type="Texture2D" uid="uid://dsfw7sbw828tb" path="res://sprites/evil-green-thing.png" id="2_ap8mw"]
 [ext_resource type="Texture2D" uid="uid://p0gl3i4dhpsh" path="res://sprites/shadows.png" id="3_ap8mw"]
 [ext_resource type="AudioStream" uid="uid://q3gvmure5q2e" path="res://audio/hit1.ogg" id="4_wpu44"]
 [ext_resource type="Script" uid="uid://bcsmknrgcsfrv" path="res://scripts/oneshot_audio.gd" id="5_16l4b"]
+[ext_resource type="AudioStream" uid="uid://bh5kpgwedene2" path="res://audio/nomnom.ogg" id="6_cbbbg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kek77"]
 atlas = ExtResource("2_ap8mw")
@@ -75,6 +76,9 @@ texture = SubResource("AtlasTexture_wpu44")
 [node name="hit sound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_wpu44")
 script = ExtResource("5_16l4b")
+
+[node name="nomnom" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_cbbbg")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

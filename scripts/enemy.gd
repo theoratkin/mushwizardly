@@ -28,6 +28,7 @@ func _process(delta: float):
 	if is_touching_home and attack_timeout <= 0:
 		target.take_damage(dps)
 		attack_timeout = 1.0
+		get_node("nomnom").play()
 	attack_timeout -= delta
 
 func _physics_process(delta: float) -> void:

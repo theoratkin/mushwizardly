@@ -48,8 +48,8 @@ func _handle_attack(event: InputEvent):
 		var instance = swoosh.instantiate()
 		add_child(instance)
 		instance.set_flipped(is_flipped)
-		var swoosh_sound = swoosh_sound.instantiate()
-		get_node("/root/main").add_child(swoosh_sound)
+		var swoosh_sound_instance = swoosh_sound.instantiate()
+		get_node("/root/main").add_child(swoosh_sound_instance)
 
 func _handle_debug_keys(event: InputEvent):
 	if event.is_action_pressed("debug_get_coins"):
