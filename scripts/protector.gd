@@ -55,6 +55,7 @@ func fire_at_enemy(enemy: Node2D):
 	spawn_projectile(enemy.global_position)
 	firerate_timeout = firerate
 	get_node("animated sprite").play("attack")
+	get_node("shoot audio").play()
 
 
 func spawn_projectile(target: Vector2):

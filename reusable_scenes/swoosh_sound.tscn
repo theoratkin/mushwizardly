@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://06dxh6xn2ura"]
+
+[ext_resource type="AudioStream" uid="uid://drbqe4fod5og0" path="res://audio/swoosh.ogg" id="1_0ncou"]
+[ext_resource type="Script" uid="uid://bcsmknrgcsfrv" path="res://scripts/oneshot_audio.gd" id="2_044hj"]
+
+[node name="swoosh sound" type="AudioStreamPlayer2D"]
+stream = ExtResource("1_0ncou")
+autoplay = true
+script = ExtResource("2_044hj")
+destroy_on_finished = true

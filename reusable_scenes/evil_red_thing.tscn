@@ -1,8 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://1urh5d1gxwpw"]
+[gd_scene load_steps=13 format=3 uid="uid://1urh5d1gxwpw"]
 
 [ext_resource type="Script" uid="uid://7x5bhemm0w41" path="res://scripts/enemy.gd" id="1_7tfyn"]
 [ext_resource type="Texture2D" uid="uid://d1m3oamtmbtuc" path="res://sprites/evil-red-thing.png" id="2_nhklh"]
 [ext_resource type="Texture2D" uid="uid://p0gl3i4dhpsh" path="res://sprites/shadows.png" id="3_nhklh"]
+[ext_resource type="AudioStream" uid="uid://q3gvmure5q2e" path="res://audio/hit1.ogg" id="4_t8vk4"]
+[ext_resource type="Script" uid="uid://bcsmknrgcsfrv" path="res://scripts/oneshot_audio.gd" id="5_w0cu4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_efxa6"]
 atlas = ExtResource("2_nhklh")
@@ -52,6 +54,7 @@ gravity_scale = 0.0
 lock_rotation = true
 linear_damp = 3.0
 script = ExtResource("1_7tfyn")
+coins = 2
 metadata/is_enemy = true
 
 [node name="animated sprite" type="AnimatedSprite2D" parent="."]
@@ -68,5 +71,11 @@ modulate = Color(1, 1, 1, 0.392157)
 position = Vector2(0, 7)
 texture = SubResource("AtlasTexture_t8vk4")
 
+[node name="hit sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_t8vk4")
+pitch_scale = 0.73
+script = ExtResource("5_w0cu4")
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="finished" from="hit sound" to="hit sound" method="_on_finished"]

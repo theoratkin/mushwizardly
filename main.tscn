@@ -1,6 +1,7 @@
-[gd_scene load_steps=45 format=4 uid="uid://b5wu7a23cc7je"]
+[gd_scene load_steps=46 format=4 uid="uid://b5wu7a23cc7je"]
 
 [ext_resource type="Texture2D" uid="uid://b6eggqcv60klk" path="res://sprites/foliage.png" id="1_1bvp3"]
+[ext_resource type="AudioStream" uid="uid://6iit4l1uwoqi" path="res://audio/coin.ogg" id="1_d13ii"]
 [ext_resource type="Texture2D" uid="uid://b752koosuarxv" path="res://sprites/tileset.png" id="1_h2yge"]
 [ext_resource type="Texture2D" uid="uid://b3uvwmkpka20e" path="res://sprites/home.png" id="1_ig7tw"]
 [ext_resource type="Texture2D" uid="uid://6lfr6qe4hwca" path="res://sprites/player.png" id="2_0xm2m"]
@@ -172,6 +173,11 @@ atlas = ExtResource("6_efxa6")
 region = Rect2(0, 0, 16, 16)
 
 [node name="main" type="Node2D"]
+
+[node name="sounds" type="Node" parent="."]
+
+[node name="coin sound" type="AudioStreamPlayer2D" parent="sounds"]
+stream = ExtResource("1_d13ii")
 
 [node name="ground" type="TileMapLayer" parent="."]
 use_parent_material = true

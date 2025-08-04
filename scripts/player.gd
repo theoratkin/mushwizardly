@@ -7,11 +7,13 @@ signal coin_collected(total_coins: int)
 @onready var sprite: AnimatedSprite2D = get_node("sprite")
 
 var swoosh = preload("res://reusable_scenes/swoosh.tscn")
+var swoosh_sound = preload("res://reusable_scenes/swoosh_sound.tscn")
 var is_flipped = false
 
 func collect_coin():
 	GameState.coin_balance += 1
 	coin_collected.emit(GameState.coin_balance)
+	get_node("/root/main/sounds/coin sound").play()
 
 func _physics_process(delta: float) -> void:
 	if GameState.is_game_over:
@@ -46,6 +48,8 @@ func _handle_attack(event: InputEvent):
 		var instance = swoosh.instantiate()
 		add_child(instance)
 		instance.set_flipped(is_flipped)
+		var swoosh_sound = swoosh_sound.instantiate()
+		get_node("/root/main").add_child(swoosh_sound)
 
 func _handle_debug_keys(event: InputEvent):
 	if event.is_action_pressed("debug_get_coins"):
