@@ -1,5 +1,6 @@
-[gd_scene load_steps=47 format=4 uid="uid://b5wu7a23cc7je"]
+[gd_scene load_steps=48 format=4 uid="uid://b5wu7a23cc7je"]
 
+[ext_resource type="AudioStream" uid="uid://b3ikheq5mlmg3" path="res://audio/music.ogg" id="1_0odxb"]
 [ext_resource type="Texture2D" uid="uid://b6eggqcv60klk" path="res://sprites/foliage.png" id="1_1bvp3"]
 [ext_resource type="AudioStream" uid="uid://6iit4l1uwoqi" path="res://audio/coin.ogg" id="1_d13ii"]
 [ext_resource type="Texture2D" uid="uid://b752koosuarxv" path="res://sprites/tileset.png" id="1_h2yge"]
@@ -176,6 +177,12 @@ region = Rect2(0, 0, 16, 16)
 [node name="main" type="Node2D"]
 
 [node name="sounds" type="Node" parent="."]
+
+[node name="music" type="AudioStreamPlayer2D" parent="sounds"]
+stream = ExtResource("1_0odxb")
+volume_db = -10.0
+autoplay = true
+parameters/looping = true
 
 [node name="coin sound" type="AudioStreamPlayer2D" parent="sounds"]
 stream = ExtResource("1_d13ii")
