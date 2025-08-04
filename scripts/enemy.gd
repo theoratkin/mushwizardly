@@ -17,10 +17,13 @@ var hit_sound: AudioStreamPlayer2D
 var is_dead = false
 
 func _ready():
-	swaying = Vector2(randf() - 0.5, randf() - 0.5) * 2
+	_choose_random_swaying()
 	hit_sound = get_node("hit sound")
 	remove_child(hit_sound)
 	get_node("/root/main").add_child(hit_sound)
+
+func _choose_random_swaying():
+	swaying = Vector2(randf() - 0.5, randf() - 0.5) * 2
 
 func _process(delta: float):
 	if GameState.is_game_over:
