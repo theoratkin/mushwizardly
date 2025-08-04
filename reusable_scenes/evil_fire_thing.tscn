@@ -1,0 +1,87 @@
+[gd_scene load_steps=14 format=3 uid="uid://c3cmua72u8o4a"]
+
+[ext_resource type="Script" uid="uid://7x5bhemm0w41" path="res://scripts/enemy.gd" id="1_lrkhb"]
+[ext_resource type="Texture2D" uid="uid://dibqwu8m5tk50" path="res://sprites/evil-fire-thing.png" id="2_lrkhb"]
+[ext_resource type="Texture2D" uid="uid://p0gl3i4dhpsh" path="res://sprites/shadows.png" id="3_6lnqd"]
+[ext_resource type="AudioStream" uid="uid://q3gvmure5q2e" path="res://audio/hit1.ogg" id="4_dvash"]
+[ext_resource type="Script" uid="uid://bcsmknrgcsfrv" path="res://scripts/oneshot_audio.gd" id="5_n2qcg"]
+[ext_resource type="AudioStream" uid="uid://bh5kpgwedene2" path="res://audio/nomnom.ogg" id="6_a5w2p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6f7qs"]
+atlas = ExtResource("2_lrkhb")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6lnqd"]
+atlas = ExtResource("2_lrkhb")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dvash"]
+atlas = ExtResource("2_lrkhb")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n2qcg"]
+atlas = ExtResource("2_lrkhb")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a5w2p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6f7qs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6lnqd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dvash")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2qcg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lrkhb"]
+radius = 5.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t8vk4"]
+atlas = ExtResource("3_6lnqd")
+region = Rect2(16, 0, 16, 8)
+
+[node name="evil fire thing" type="RigidBody2D"]
+mass = 0.8
+gravity_scale = 0.0
+lock_rotation = true
+linear_damp = 3.0
+script = ExtResource("1_lrkhb")
+coins = 2
+metadata/is_enemy = true
+
+[node name="animated sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_a5w2p")
+autoplay = "default"
+frame_progress = 0.696169
+speed_scale = 3.0
+
+[node name="collision shape" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1.5)
+shape = SubResource("CircleShape2D_lrkhb")
+
+[node name="shadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(0, 7)
+texture = SubResource("AtlasTexture_t8vk4")
+
+[node name="hit sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_dvash")
+pitch_scale = 0.73
+script = ExtResource("5_n2qcg")
+
+[node name="nomnom" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_a5w2p")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="finished" from="hit sound" to="hit sound" method="_on_finished"]
