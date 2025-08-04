@@ -10,11 +10,14 @@ extends RigidBody2D
 
 const coin_scene = preload("res://reusable_scenes/coin.tscn")
 
-var swaying = Vector2()
 var is_touching_home = false
 var attack_timeout = 0.0
 var hit_sound: AudioStreamPlayer2D
 var is_dead = false
+
+var sway_angle = 0.0
+var sway_timer = 0.0
+var sway_direction = 1.0
 
 func _ready():
 	_choose_random_swaying()
@@ -23,7 +26,9 @@ func _ready():
 	get_node("/root/main").add_child(hit_sound)
 
 func _choose_random_swaying():
-	swaying = Vector2(randf() - 0.5, randf() - 0.5) * 2
+	sway_direction = 1.0 if randf() > 0.5 else -1.0
+	sway_angle = randf() * 0.6
+	sway_timer = randf() * 1.5 + 0.5
 
 func _process(delta: float):
 	if GameState.is_game_over:
@@ -37,10 +42,12 @@ func _process(delta: float):
 func _physics_process(delta: float) -> void:
 	if GameState.is_game_over:
 		return
-	var direction = global_position.direction_to(target.global_position) + swaying
-	apply_central_force(direction * speed)
-	swaying.x -= sign(swaying.x) * delta/20
-	swaying.y -= sign(swaying.y) * delta/20
+	var to_target = global_position.direction_to(target.global_position)
+	var rotated_direction = to_target.rotated(sway_angle * sway_direction)
+	apply_central_force(rotated_direction * speed)
+	sway_timer -= delta
+	if sway_timer <= 0:
+		_choose_random_swaying()
 
 func drop_coins():
 	for i in coins:
