@@ -16,7 +16,6 @@
 [ext_resource type="Texture2D" uid="uid://dc4r6u0jd5cam" path="res://sprites/ring2.png" id="7_vivmo"]
 [ext_resource type="Texture2D" uid="uid://17p21ibal2w2" path="res://sprites/coin.png" id="8_5vw27"]
 [ext_resource type="Texture2D" uid="uid://d3ffon7c6oibc" path="res://sprites/ring3.png" id="8_vivmo"]
-[ext_resource type="FontFile" uid="uid://caqa8gk8bjfox" path="res://fonts/PressStart2P-Regular.ttf" id="9_kek77"]
 [ext_resource type="Script" uid="uid://csvxnptcdnt0m" path="res://scripts/ui/coins_label.gd" id="10_4c57u"]
 [ext_resource type="Script" uid="uid://sh5fq58iiey3" path="res://scripts/home.gd" id="11_82xsv"]
 [ext_resource type="Texture2D" uid="uid://p0gl3i4dhpsh" path="res://sprites/shadows.png" id="13_ryguw"]
@@ -24,6 +23,8 @@
 [ext_resource type="Texture2D" uid="uid://c4u30tcl752qb" path="res://sprites/ui.png" id="15_2cqfq"]
 [ext_resource type="Script" uid="uid://d1e3hdindg16o" path="res://scripts/ui/shop.gd" id="15_yaehf"]
 [ext_resource type="Script" uid="uid://bw0ii02wmlfuq" path="res://scripts/ui/shop_item.gd" id="17_074og"]
+[ext_resource type="LabelSettings" uid="uid://8136sl5hvnp7" path="res://fonts/hud_label_settings.tres" id="19_lswn8"]
+[ext_resource type="Script" uid="uid://fmiajbpf76ut" path="res://scripts/timer.gd" id="21_a6jrf"]
 [ext_resource type="Texture2D" uid="uid://l3t37ipdubc" path="res://sprites/house_godray.png" id="24_1u8w0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1bvp3"]
@@ -157,10 +158,6 @@ region = Rect2(8, 0, 8, 8)
 atlas = ExtResource("8_5vw27")
 region = Rect2(2, 2, 5, 5)
 margin = Rect2(1, 1, 1, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_4c57u"]
-font = ExtResource("9_kek77")
-font_size = 8
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d13ii"]
 atlas = ExtResource("15_2cqfq")
@@ -357,9 +354,16 @@ expand_mode = 2
 [node name="label" type="Label" parent="gui/hud/coins"]
 layout_mode = 2
 text = "0"
-label_settings = SubResource("LabelSettings_4c57u")
+label_settings = ExtResource("19_lswn8")
 vertical_alignment = 1
 script = ExtResource("10_4c57u")
+
+[node name="timer" type="Label" parent="gui/hud"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "00:00"
+label_settings = ExtResource("19_lswn8")
+script = ExtResource("21_a6jrf")
 
 [node name="shop" type="MarginContainer" parent="gui"]
 visible = false
@@ -400,7 +404,7 @@ offset_top = 4.0
 offset_right = 41.0
 offset_bottom = 12.0
 text = "10"
-label_settings = SubResource("LabelSettings_4c57u")
+label_settings = ExtResource("19_lswn8")
 vertical_alignment = 1
 
 [node name="icon" type="TextureRect" parent="gui/shop/items/item"]
