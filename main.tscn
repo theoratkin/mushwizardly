@@ -331,6 +331,7 @@ offset_right = 384.0
 offset_bottom = 216.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="hud" type="MarginContainer" parent="gui"]
 layout_mode = 1
