@@ -45,6 +45,8 @@ func _unhandled_input(event: InputEvent):
 	if GameState.is_game_over:
 		return
 	_handle_attack(event)
+	if event.is_action_pressed("buy"):
+		GameState.try_buy_wizard()
 	var is_editor = OS.has_feature("editor")
 	if is_editor:
 		_handle_debug_keys(event)
